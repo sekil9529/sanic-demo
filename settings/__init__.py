@@ -11,8 +11,8 @@ from .production import Settings as ProSettings
 @unique
 class EnvEnum(Enum):
     """环境枚举类"""
-    DEV: BaseSettings = DevSettings
-    PRO: BaseSettings = ProSettings
+    DEV: Type[BaseSettings] = DevSettings
+    PRO: Type[BaseSettings] = ProSettings
 
 
 def get_settings(env: Optional[str] = None) -> Type[BaseSettings]:
