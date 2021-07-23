@@ -7,6 +7,7 @@ from sanic import Sanic
 
 from app.blue import BLUE_TUPLE
 from core.listeners import LISTENER_TUPLE
+from core.middlewares import MIDDLEWARE_TUPLE
 from settings import get_settings, BaseSettings
 
 
@@ -26,6 +27,9 @@ def create_app(env: Optional[str] = None) -> Sanic:
 
     # 注册监听
     register_listener(app, settings)
+
+    # 注册中间件
+    register_middleware(app)
 
     # 注册蓝图
     register_blueprint(app)
@@ -47,4 +51,15 @@ def register_listener(app: Sanic, settings: Type[BaseSettings]) -> None:
         for event in ('before_server_start', 'after_server_start', 'before_server_stop', 'after_server_stop'):
             if hasattr(listener, event):
                 app.register_listener(getattr(listener, event), event)
+    return None
+
+
+def register_middleware(app: Sanic) -> None:
+    """注册中间件"""
+    for middle_cls in MIDDLEWARE_TUPLE:
+        middle = middle_cls(app)
+        if hasattr(middle, 'before_request'):
+            app.register_middleware(middle.before_request, attach_to='request')
+        if hasattr(middle, 'before_response'):
+            app.register_middleware(middle.before_response, attach_to='response')
     return None
