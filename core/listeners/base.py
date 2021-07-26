@@ -2,10 +2,10 @@
 
 import abc
 from typing import Type
+from types import SimpleNamespace
 from asyncio.base_events import BaseEventLoop
 from sanic import Sanic
 
-from libs.dict import ExtDict
 from settings.base import BaseSettings
 
 
@@ -29,7 +29,7 @@ class BaseListener(metaclass=abc.ABCMeta):
         :param settings: 配置类
         """
         self._settings = settings
-        self.ext = ExtDict()  # 扩展
+        self.ext: SimpleNamespace = SimpleNamespace()  # 扩展
 
     @abc.abstractmethod
     async def after_server_start(self, app: Sanic, loop: BaseEventLoop) -> None:

@@ -1,5 +1,7 @@
 # coding: utf-8
 
+"""用户蓝图"""
+
 from sanic import Blueprint
 from .views import user_list
 

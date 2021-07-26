@@ -8,19 +8,18 @@ from sanic import Sanic
 from app.blue import BLUE_TUPLE
 from core.listeners import LISTENER_TUPLE
 from core.middlewares import MIDDLEWARE_TUPLE
+from core.exception_handlers import EXC_HDL_TUPLE
 from settings import get_settings, BaseSettings
 
 
 def create_app(env: Optional[str] = None) -> Sanic:
     """创建app"""
 
-    app = Sanic(__name__)
-
     # 获取配置
     settings = get_settings(env)
 
-    # 配置日志
-    logging.config.dictConfig(settings.BASE_LOGGING)
+    # app创建
+    app = Sanic(__name__, log_config=settings.BASE_LOGGING)
 
     # sanic应用配置
     app.config.update_config(settings)
@@ -31,16 +30,18 @@ def create_app(env: Optional[str] = None) -> Sanic:
     # 注册中间件
     register_middleware(app)
 
+    # 注册异常处理
+    register_exception_handler(app)
+
     # 注册蓝图
     register_blueprint(app)
 
     return app
 
 
-def register_blueprint(app: Sanic) -> None:
+def register_blueprint(app: Sanic, prefix: str = '/api') -> None:
     """注册蓝图"""
-    for bp in BLUE_TUPLE:
-        app.blueprint(bp)
+    app.blueprint(BLUE_TUPLE)
     return None
 
 
@@ -62,4 +63,12 @@ def register_middleware(app: Sanic) -> None:
             app.register_middleware(middle.before_request, attach_to='request')
         if hasattr(middle, 'before_response'):
             app.register_middleware(middle.before_response, attach_to='response')
+    return None
+
+
+def register_exception_handler(app: Sanic) -> None:
+    """注册异常处理"""
+    for exc_hdl_cls in EXC_HDL_TUPLE:
+        exc_hdl = exc_hdl_cls()
+        app.error_handler.add(exc_hdl.get_exception(), exc_hdl.handle)
     return None
