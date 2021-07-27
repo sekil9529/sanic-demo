@@ -6,4 +6,4 @@ app = create_app()
 
 
 if __name__ == '__main__':
-    app.run(workers=2)
+    app.run(workers=2, port=8001)
