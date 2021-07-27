@@ -50,7 +50,8 @@ class BaseSettings:
         },
         'formatters': {
             'default': {
-                'format': '[%(asctime)s.%(msecs)0.6f] - [%(levelname)s] - [%(name)s:%(lineno)d] - [%(message)s]',
+                'format': '[%(asctime)s.%(msecs).6f] - [%(levelname)s] - [%(name)s:%(lineno)d] - [%(message)s]',
+                'datefmt': '%Y-%m-%d %H:%M:%S',
             }
         },
         'handlers': {

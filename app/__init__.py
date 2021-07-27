@@ -39,9 +39,11 @@ def create_app(env: Optional[str] = None) -> Sanic:
     return app
 
 
-def register_blueprint(app: Sanic, prefix: str = '/api') -> None:
+def register_blueprint(app: Sanic, prefix: Optional[str] = 'api') -> None:
     """注册蓝图"""
-    app.blueprint(BLUE_TUPLE)
+    for blueprint in BLUE_TUPLE:
+        blueprint.url_prefix = '/'.join(url for url in (prefix, blueprint.url_prefix) if url)
+        app.blueprint(blueprint)
     return None
 
 

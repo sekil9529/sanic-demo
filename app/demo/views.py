@@ -3,10 +3,13 @@
 from sanic.response import json
 from sanic.views import HTTPMethodView
 
+from core.response import response_ok
+
 
 async def hello(request):
     """hello word"""
-    return json({'message': 'hello world!'})
+    # return json({'message': 'hello world!'})
+    return response_ok({'message': 'hello world!'})
 
 
 class HelloView(HTTPMethodView):
