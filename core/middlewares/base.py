@@ -2,7 +2,7 @@
 
 import abc
 
-from sanic import Sanic
+from sanic import Sanic, Request, HTTPResponse
 
 
 class BaseMiddleware(metaclass=abc.ABCMeta):
@@ -18,11 +18,11 @@ class BaseMiddleware(metaclass=abc.ABCMeta):
         self._app = app
 
     @abc.abstractmethod
-    async def before_request(self, request) -> None:
+    async def before_request(self, request: Request) -> None:
         """请求前处理"""
         pass
 
     @abc.abstractmethod
-    async def before_response(self, request, response) -> None:
+    async def before_response(self, request: Request, response: HTTPResponse) -> None:
         """响应前处理"""
         pass

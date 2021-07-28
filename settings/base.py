@@ -39,13 +39,15 @@ class BaseSettings:
     BASE_LOGGING: Dict[str, Any] = {
         'version': 1,
         'loggers': {
-            "": {
-                "level": "INFO",
-                "handlers": ["console", 'info_file', 'error_file']
+            '': {
+                'level': 'INFO',
+                'handlers': ['console', 'info_file', 'error_file'],
+                'propagate': False
             },
-            "sanic.root": {
-                "level": "INFO",
-                "handlers": ["console", 'info_file', 'error_file']
+            'sanic.root': {
+                'level': 'INFO',
+                'handlers': ['console', 'info_file', 'error_file'],
+                'propagate': False
             },
         },
         'formatters': {
