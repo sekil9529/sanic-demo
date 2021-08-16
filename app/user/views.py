@@ -20,8 +20,5 @@ async def user_list(request: Request):
     async with db_session.begin():
         cur_result = await db_session.execute(query)
     result = cur_result.fetchall()
-
-    # if result:
-    #     result = [objs[0] for objs in result]
     data = result_format(result)
     return json({'data': data})
