@@ -2,9 +2,12 @@
 
 from sanic import Request, json
 from sqlalchemy.future import select
-from sqlalchemy import desc, update, insert
+from sqlalchemy import desc
 from app.models import User
+from libs.logger import LoggerProxy
 from libs.sqlalchemy.result import result_format
+
+logger = LoggerProxy(__name__)
 
 
 async def user_list(request: Request):

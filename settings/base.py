@@ -44,7 +44,7 @@ class BaseSettings:
                 'handlers': ['console', 'info_file', 'error_file'],
                 'propagate': False
             },
-            'sanic.root': {
+            'sanic': {
                 'level': 'INFO',
                 'handlers': ['console', 'info_file', 'error_file'],
                 'propagate': False

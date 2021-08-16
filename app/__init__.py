@@ -1,6 +1,5 @@
 # coding: utf-8
 
-import logging.config
 from typing import Optional, Type
 
 from sanic import Sanic
