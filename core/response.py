@@ -57,5 +57,5 @@ def response_fail(
     # 内容
     content: dict[str, Any] = dict(code=code, error=error, message=message, desc=desc)
     # 响应状态码
-    status_code = 500 if code == '500' else 200
+    status_code: int = 500 if code == '500' else 200
     return json(content, cls=ExtJsonEncoder, status=status_code)
