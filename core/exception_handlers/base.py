@@ -1,7 +1,7 @@
 # coding: utf-8
 
+from __future__ import annotations
 import abc
-from typing import Type
 from sanic.response import HTTPResponse
 from sanic.request import Request
 
@@ -10,7 +10,7 @@ class BaseExcHandler(metaclass=abc.ABCMeta):
     """基础异常处理"""
 
     @abc.abstractmethod
-    def get_exception(self) -> Type[Exception]:
+    def get_exception(self) -> type[Exception]:
         """获取异常"""
         pass
 

@@ -1,5 +1,6 @@
 # coding: utf-8
-from typing import Type
+
+from __future__ import annotations
 
 from sanic import HTTPResponse
 from sanic.request import Request
@@ -12,7 +13,7 @@ from core.response import response_fail
 class ErrorCodeExcHandler(BaseExcHandler):
     """错误码异常处理"""
 
-    def get_exception(self) -> Type[ECException]:
+    def get_exception(self) -> type[ECException]:
         return ECException
 
     def handle(self, request: Request, exception: ECException) -> HTTPResponse:

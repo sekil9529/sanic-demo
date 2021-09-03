@@ -1,13 +1,14 @@
 # coding: utf-8
 
+from __future__ import annotations
 import logging
-from typing import Optional, Tuple, Any
+from typing import Optional, Any
 
 
 class LoggerProxy:
     """logger代理"""
 
-    __slots__: Tuple[str, ...] = ('_name', '_logger')
+    __slots__: tuple[str, ...] = ('_name', '_logger')
 
     def __init__(self, name: Optional[str] = None) -> None:
         self._name: Optional[str] = name

@@ -4,6 +4,6 @@ import string
 import random
 
 
-def make_secret_key(k=42):
+def make_secret_key(k=42) -> str:
     origin_str = string.digits + string.ascii_letters + string.punctuation
     return ''.join(random.choices(origin_str, k=k))

@@ -1,22 +1,23 @@
 # coding: utf-8
 
-import logging
-from typing import Type
+from __future__ import annotations
+
 from sanic import HTTPResponse
 from sanic.request import Request
 
+from libs.logger import LoggerProxy
 from .base import BaseExcHandler
 from core.response import response_fail
 
-log = logging.getLogger()
+logger: LoggerProxy = LoggerProxy(__name__)
 
 
 class UnknownExcHandler(BaseExcHandler):
     """未知异常处理"""
 
-    def get_exception(self) -> Type[Exception]:
+    def get_exception(self) -> type[Exception]:
         return Exception
 
     def handle(self, request: Request, exception: Exception) -> HTTPResponse:
-        log.exception(exception)
+        logger.exception(exception)
         return response_fail()

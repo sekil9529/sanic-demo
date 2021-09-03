@@ -1,7 +1,7 @@
 # coding: utf-8
 
+from __future__ import annotations
 import abc
-from typing import Type
 from types import SimpleNamespace
 from asyncio.base_events import BaseEventLoop
 from sanic import Sanic
@@ -23,7 +23,7 @@ class BaseListener(metaclass=abc.ABCMeta):
 
     __slots__ = ('_settings', 'ext')
 
-    def __init__(self, settings: Type[BaseSettings]) -> None:
+    def __init__(self, settings: type[BaseSettings]) -> None:
         """赋初值
 
         :param settings: 配置类
