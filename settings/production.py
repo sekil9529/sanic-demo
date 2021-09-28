@@ -8,6 +8,8 @@ from .base import BaseSettings, CONFIG_INFO
 class Settings(BaseSettings):
     """配置类"""
 
+    DEBUG: bool = False
+
     SECRET_KEY: str = 'wdATN(TPpSB-269m0Ayd9[H+^:/TZW;qkIJD8a:-K{'
 
     ACCESS_LOG: bool = False
