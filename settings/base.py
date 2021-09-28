@@ -11,6 +11,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # 日志文件路径
 LOG_PATH = os.path.join(BASE_DIR, 'logs')
 
+if not os.path.exists(LOG_PATH):
+    os.makedirs(LOG_PATH)
+
 # 配置信息
 CONFIG_INFO = Config(os.path.join(BASE_DIR, '.env')).format()
 
