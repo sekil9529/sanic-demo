@@ -5,7 +5,7 @@
 from __future__ import annotations
 from typing import Any, Optional
 from decimal import Decimal
-from json import JSONEncoder
+from json import JSONEncoder, dumps
 from datetime import datetime
 from sanic import json
 from sanic.response import HTTPResponse
@@ -31,15 +31,15 @@ def response_ok(data: Any = None) -> HTTPResponse:
     :return:
     """
     # 错误码
-    code: str = '0'
+    code: str = "0"
     # 内容
     content: dict[str, Any] = dict(code=code, data=data)
-    return json(content, cls=ExtJsonEncoder)
+    return json(content, dumps=dumps, cls=ExtJsonEncoder)
 
 
 def response_fail(
         enum: Optional[ECEnum] = None,
-        desc: Any = '') -> HTTPResponse:
+        desc: Any = "") -> HTTPResponse:
     """失败返回
 
     :param enum: 错误码枚举类
@@ -57,5 +57,5 @@ def response_fail(
     # 内容
     content: dict[str, Any] = dict(code=code, error=error, message=message, desc=desc)
     # 响应状态码
-    status_code: int = 500 if code == '500' else 200
-    return json(content, cls=ExtJsonEncoder, status=status_code)
+    status_code: int = 500 if code == "500" else 200
+    return json(content, dumps=dumps, cls=ExtJsonEncoder, status=status_code)
