@@ -1,6 +1,7 @@
 # coding: utf-8
 
 from __future__ import annotations
+
 from typing import Optional, Any
 from configparser import RawConfigParser as ConfigParser
 
