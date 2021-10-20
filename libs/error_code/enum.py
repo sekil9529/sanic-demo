@@ -1,48 +1,42 @@
 # coding: utf-8
 
-"""错误码枚举类"""
-
 from __future__ import annotations
+
 from typing import NamedTuple
-from enum import Enum, EnumMeta
+from enum import EnumMeta, Enum, unique
 from types import DynamicClassAttribute
 
-from libs.enum import keyword_value_unique
-
 __all__ = (
-    'ECData',
-    'BaseECEnum',
+    "ECData",
+    "BaseECEnum"
 )
 
 
 class ECData(NamedTuple):
     """错误码数据"""
-    code: str     # 错误码
-    message: str  # 错误信息
+
+    # 错误码
+    code: str
+    # 错误信息
+    message: str = "服务器异常"
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, ECData):
+            raise NotImplemented
+        return self.code == other.code
 
 
 class _ECEnumMeta(EnumMeta):
+    """错误码枚举元类"""
 
     def __new__(mcs, *args, **kwargs):
         enum_class = super(_ECEnumMeta, mcs).__new__(mcs, *args, **kwargs)
-        # 校验code唯一
-        enum_class = keyword_value_unique(('code',))(enum_class)
-        enum_class._member_codes_ = tuple(enum.value.code for enum in enum_class)
-        return enum_class
-
-    @property
-    def codes(cls) -> tuple[str, ...]:
-        return cls._member_codes_
+        # 唯一
+        return unique(enum_class)
 
 
 class BaseECEnum(Enum, metaclass=_ECEnumMeta):
-    """错误码基类
-
-    使用示例：
-    class ECEnum(BaseECEnum):
-        ServerError = ECData(code="500", message="服务异常，请稍后重试")
-
-    """
+    """错误码基类"""
 
     @DynamicClassAttribute
     def code(self):
