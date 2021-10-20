@@ -10,4 +10,4 @@ app: Sanic = create_app(os.environ.get("ENV", "DEV"))
 
 
 if __name__ == '__main__':
-    app.run(workers=2, port=8000, auto_reload=False)
+    app.run(workers=1, port=8000, auto_reload=True)

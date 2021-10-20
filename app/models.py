@@ -1,32 +1,34 @@
 # coding: utf-8
 
-from datetime import datetime
-
-from sqlalchemy import Column, BIGINT, VARCHAR, DATETIME
-from sqlalchemy.dialects.mysql import TINYINT
-from libs.sqlalchemy import Base
+from tortoise import fields
+from tortoise.models import Model
 
 
-class User(Base):
+class User(Model):
     """用户表"""
 
-    __tablename__ = 't_user'
+    class Meta:
+        table = "t_user"
+        table_description = "用户表"
 
-    # 表的结构:
-    id = Column(BIGINT, primary_key=True, autoincrement=True, comment='user表id')
-    name = Column(VARCHAR(20), nullable=False, default='', comment='姓名')
-    ctime = Column(DATETIME, nullable=False, default=datetime.now, comment='创建时间')
-    utime = Column(DATETIME, nullable=False, onupdate=datetime.now, default=datetime.now, comment='更新时间')
+    id = fields.BigIntField(pk=True, description="表id")
+    name = fields.CharField(max_length=20, null=False, default="", description="姓名")
+    ctime = fields.DatetimeField(null=False, auto_now_add=True, description="创建时间")
+    utime = fields.DatetimeField(null=False, auto_now=True, description="更新时间")
 
 
-class Follow(Base):
+class Follow(Model):
     """关注表"""
 
-    __tablename__ = 't_follow'
+    class Meta:
+        table = "t_follow"
+        table_description = "关注表"
 
-    id = Column(BIGINT, primary_key=True, autoincrement=True, comment='follow表id')
-    user_id = Column(BIGINT, nullable=False, comment='关注人id')
-    usee_id = Column(BIGINT, nullable=False, comment='被关注人id')
-    ctime = Column(DATETIME, nullable=False, default=datetime.now, comment='创建时间')
-    utime = Column(DATETIME, nullable=False, onupdate=datetime.now, default=datetime.now, comment='更新时间')
-    status = Column(TINYINT, nullable=False, default=1, comment='状态')
+    id = fields.BigIntField(pk=True, description="表id")
+    user = fields.ForeignKeyField("models.User", db_constraint=False, index=True, null=False,
+                                  related_name="rel_follow_user", description="关注人id")
+    usee = fields.ForeignKeyField("models.User", db_constraint=False, index=True, null=False,
+                                  related_name="rel_follow_usee", description="被关注人id")
+    status = fields.BooleanField(null=False, default=1, description="状态")
+    ctime = fields.DatetimeField(null=False, auto_now_add=True, description="创建时间")
+    utime = fields.DatetimeField(null=False, auto_now=True, description="更新时间")

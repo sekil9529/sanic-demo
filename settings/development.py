@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from typing import Dict, Any
+from __future__ import annotations
 
 from .base import BaseSettings, CONFIG_INFO
 
@@ -14,18 +14,34 @@ class Settings(BaseSettings):
     ENABLE_CORS: bool = False
     CORS_SUPPORTS_CREDENTIALS: bool = False
 
-    # SQLAlchemy
-    SQLALCHEMY_DATABASE_URL: str = f"mysql+aiomysql://{CONFIG_INFO['db']['user']}:{CONFIG_INFO['db']['password']}" \
-                                   f"@{CONFIG_INFO['db']['host']}/{CONFIG_INFO['db']['database']}?charset=utf8mb4"
-    SQLALCHEMY_ENGINE_OPTIONS: Dict[str, Any] = {
-        'pool_size': 5,
-        'max_overflow': 0,
-        'pool_recycle': 60 * 60 * 2,
-        # 'pool_reset_on_return': None,  # 放回时执行的操作，默认执行 'rollback'
-        'pool_timeout': 5,  # n秒获取不到session, 超时报错
-        'isolation_level': 'READ COMMITTED',
-        'echo_pool': True,
-        'pool_pre_ping': False,
-        'execution_options': {
-        }
+    # tortoise
+    TORTOISE: dict = {
+        "connections": {
+            "default": {
+                "engine": "tortoise.backends.mysql",
+                "credentials": {
+                    "host": CONFIG_INFO["db"]["host"],
+                    "port": CONFIG_INFO["db"]["port"],
+                    "user": CONFIG_INFO["db"]["user"],
+                    "password": CONFIG_INFO["db"]["password"],
+                    "database": CONFIG_INFO["db"]["database"],
+                    "maxsize": 5,
+                    # 注意：启动时直接创建5个session
+                    "minsize": 5,
+                    # 回收时间，每次获取session时判断，如果超时，全部重新创建
+                    "pool_recycle": 60 * 60 * 2,
+                    # 设置事务隔离级别为RC
+                    "init_command": "SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED",
+                }
+            }
+        },
+        "apps": {
+            "models": {
+                "models": ["app.models"],
+                "default_connection": "default",
+            }
+        },
+        "use_tz": False,
+        # set session time_zone
+        "timezone": "Asia/Shanghai",
     }

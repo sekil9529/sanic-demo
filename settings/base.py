@@ -1,7 +1,8 @@
 # coding: utf-8
 
+from __future__ import annotations
+
 import os
-from typing import Dict, Any
 
 from libs.config import Config
 
@@ -33,13 +34,11 @@ class BaseSettings:
     ENABLE_CORS: bool = False
     CORS_SUPPORTS_CREDENTIALS: bool = False
 
-    # SQLAlchemy
-    SQLALCHEMY_DATABASE_URL: str
-    # SQLAlchemy其他参数
-    SQLALCHEMY_ENGINE_OPTIONS: Dict[str, Any] = {}
+    # tortoise
+    TORTOISE: dict = {}
 
     # 日志配置
-    BASE_LOGGING: Dict[str, Any] = {
+    BASE_LOGGING: dict = {
         'version': 1,
         'loggers': {
             '': {

@@ -11,14 +11,13 @@ from sanic import json
 from sanic.response import HTTPResponse
 
 from .error_code import ECEnum
-from libs.datetime import to_unix_timestamp
 
 
 class ExtJsonEncoder(JSONEncoder):
     """扩展json编码器"""
     def default(self, o: Any) -> Any:
         if isinstance(o, datetime):
-            return to_unix_timestamp(o)
+            return o.strftime("%Y-%m-%d %H:%M:%S.%f")
         elif isinstance(o, Decimal):
             return str(o)
         return super().default(o)

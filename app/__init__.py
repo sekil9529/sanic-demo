@@ -3,6 +3,7 @@
 from typing import Optional, Type
 
 from sanic import Sanic
+from tortoise.contrib.sanic import register_tortoise
 
 from app.blue import BLUE_TUPLE
 from core.listeners import LISTENER_TUPLE
@@ -25,6 +26,9 @@ def create_app(env: Optional[str] = None) -> Sanic:
 
     # 注册监听
     register_listener(app, settings)
+
+    # 注册tortoise
+    register_tortoise(app, config=settings.TORTOISE, generate_schemas=False)
 
     # 注册中间件
     register_middleware(app)
