@@ -45,3 +45,10 @@ class Settings(BaseSettings):
         # set session time_zone
         "timezone": "Asia/Shanghai",
     }
+
+    REDIS: str = f"redis://" \
+                 f":{CONFIG_INFO['redis']['password']}" \
+                 f"@{CONFIG_INFO['redis']['host']}" \
+                 f":{CONFIG_INFO['redis']['port']}" \
+                 f"/{CONFIG_INFO['redis']['database']}" \
+                 f"?max_connections=10"

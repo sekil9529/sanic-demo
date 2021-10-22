@@ -40,10 +40,12 @@ sanic 模板，sanic + tortoise-orm + aiomysql + aioredis
 │   ├── __init__.py
 │   ├── listeners             # 监听
 │   │   ├── __init__.py
-│   │   └── base.py           # 监听基类
+│   │   ├── base.py           # 监听基类
+│   │   └── redis.py          # redis监听
 │   ├── middlewares           # 中间件
-│   │   ├── base.py           # 中间件基类
 │   │   ├── __init__.py
+│   │   ├── base.py           # 中间件基类
+│   │   ├── redis.py          # redis中间件
 │   │   └── timer.py          # 计时中间件
 │   └── response.py           # 响应函数
 ├── libs                      # 公共库

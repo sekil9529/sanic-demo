@@ -34,9 +34,6 @@ class BaseSettings:
     ENABLE_CORS: bool = False
     CORS_SUPPORTS_CREDENTIALS: bool = False
 
-    # tortoise
-    TORTOISE: dict = {}
-
     # 日志配置
     BASE_LOGGING: dict = {
         'version': 1,
@@ -84,3 +81,9 @@ class BaseSettings:
             },
         },
     }
+
+    # tortoise
+    TORTOISE: dict = {}
+
+    # redis
+    REDIS: str

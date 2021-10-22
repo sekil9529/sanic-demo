@@ -4,3 +4,9 @@ password =
 host =
 port = 3306
 database =
+
+[redis]
+host =
+port = 6379
+password =
+database =
