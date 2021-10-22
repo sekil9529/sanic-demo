@@ -8,14 +8,7 @@ from sanic import Sanic, Request, HTTPResponse
 class BaseMiddleware(metaclass=abc.ABCMeta):
     """中间件基类"""
 
-    __slots__ = ('_app',)
-
-    def __init__(self, app: Sanic) -> None:
-        """赋初值
-
-        :param app: sanic app
-        """
-        self._app = app
+    __slots__ = ()
 
     @abc.abstractmethod
     async def before_request(self, request: Request) -> None:

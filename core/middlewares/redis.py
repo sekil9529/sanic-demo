@@ -10,7 +10,7 @@ class RedisMiddleware(BaseMiddleware):
 
     async def before_request(self, request: Request) -> None:
         """request绑定redis client"""
-        request.ctx.redis_client = self._app.ctx.redis_client
+        request.ctx.redis_client = request.app.ctx.redis_client
 
     async def before_response(self, request: Request, response: HTTPResponse) -> None:
         """redis_client自动放回连接池，无须处理"""
