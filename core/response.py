@@ -17,7 +17,7 @@ class ExtJsonEncoder(JSONEncoder):
     """扩展json编码器"""
     def default(self, o: Any) -> Any:
         if isinstance(o, datetime):
-            return o.strftime("%Y-%m-%d %H:%M:%S.%f")
+            return o.strftime("%Y-%m-%d %H:%M:%S")
         elif isinstance(o, Decimal):
             return str(o)
         return super().default(o)
