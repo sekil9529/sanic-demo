@@ -55,6 +55,4 @@ def response_fail(
     message: str = enum.message
     # 内容
     content: dict[str, Any] = dict(code=code, error=error, message=message, desc=desc)
-    # 响应状态码
-    status_code: int = 500 if code == "500" else 200
-    return json(content, dumps=dumps, cls=ExtJsonEncoder, status=status_code)
+    return json(content, dumps=dumps, cls=ExtJsonEncoder)
