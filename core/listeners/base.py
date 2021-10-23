@@ -21,7 +21,7 @@ class BaseListener(metaclass=abc.ABCMeta):
     after_server_stop will run as late as it can, and will be after before_server_stop, but technically, the server is still running at that point
     """
 
-    __slots__ = ('_settings', 'ctx')
+    __slots__ = ('_settings',)
 
     def __init__(self, settings: type[BaseSettings]) -> None:
         """赋初值
@@ -29,7 +29,6 @@ class BaseListener(metaclass=abc.ABCMeta):
         :param settings: 配置类
         """
         self._settings = settings
-        self.ctx: SimpleNamespace = SimpleNamespace()  # 扩展
 
     @abc.abstractmethod
     async def after_server_start(self, app: Sanic, loop: BaseEventLoop) -> None:
