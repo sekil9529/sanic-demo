@@ -21,7 +21,7 @@ def create_app(env: Optional[str] = None) -> Sanic:
     settings: type[BaseSettings] = get_settings(env)
 
     # app创建
-    app: Sanic = Sanic(__name__, log_config=settings.BASE_LOGGING)
+    app: Sanic = Sanic(__name__, log_config=getattr(settings, "BASE_LOGGING"))
 
     # sanic应用配置
     app.config.update_config(settings)
@@ -30,7 +30,7 @@ def create_app(env: Optional[str] = None) -> Sanic:
     register_listener(app, settings)
 
     # 注册tortoise
-    register_tortoise(app, config=settings.TORTOISE, generate_schemas=False)
+    register_tortoise(app, config=getattr(settings, "TORTOISE"), generate_schemas=False)
 
     # 注册中间件
     register_middleware(app)
