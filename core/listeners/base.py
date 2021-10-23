@@ -1,8 +1,8 @@
 # coding: utf-8
 
 from __future__ import annotations
+
 import abc
-from types import SimpleNamespace
 from asyncio.base_events import BaseEventLoop
 from sanic import Sanic
 
